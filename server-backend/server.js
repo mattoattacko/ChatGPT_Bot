@@ -8,6 +8,8 @@ import { Configuration, OpenAIApi } from "openai";
 //to use dotenv variables
 dotenv.config();
 
+console.log(process.env.OPENAI_API_KEY);
+
 //function that accepts an object
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -28,7 +30,7 @@ app.use(express.json());
 //dummy route route
 // with a get route, we cant really receive data from the front end
 
-app.get("/", async (req, res) => {
+app.get('/', async (req, res) => {
   res.status(200).send({
     message: "Hello World!",
   })
@@ -58,7 +60,7 @@ app.post('/', async (req, res) => {
     })
   } catch (error) {
     console.log(error);
-    res.status(500).send({ error }); //if there is an error, send it back to the FE
+    res.status(500).send(error); //if there is an error, send it back to the FE
   }
 })
 

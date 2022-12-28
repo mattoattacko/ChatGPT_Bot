@@ -17,7 +17,7 @@ function loader(element) {
     if (element.textContent === '....') { //we can also use .length > 3 here
       element.textContent = '';
     }
-  }, 300)
+  }, 300);
 }
 
 //~~~ Writes letter by letter text response from the bot ~~~//
@@ -55,13 +55,13 @@ function chatStripe(isAi, value, uniqueId) {
     `
       <div class="wrapper ${isAi && 'ai'}">
         <div class="chat">
-          <div class="profile" >
+          <div class="profile">
             <img 
               src="${isAi ? bot : user}"
               alt="${isAi ? 'bot' : 'user'}"
             />          
           </div>
-          <div class="message" id=${uniqueId} >
+          <div class="message" id=${uniqueId}>
             ${value}
           </div>
         </div>
@@ -98,7 +98,7 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   //fetch the response from the server -> get bot's response
-  const response = await fetch('/api', {
+  const response = await fetch('http://localhost:5000', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -109,11 +109,13 @@ const handleSubmit = async (e) => {
   })
   
   clearInterval(loadInterval); //stop the loading dots animation
-  messageDiv.innerHTML = ''; //clear the message div. We are not sure at which point in the loading dots animation the response will come back. Could be at 1 dot, 2 dots, etc.
+  messageDiv.innerHTML = ""; //clear the message div. We are not sure at which point in the loading dots animation the response will come back. Could be at 1 dot, 2 dots, etc.
 
   if(response.ok) {
     const data = await response.json(); //get the response from the BE server
     const parsedData = data.bot.trim(); //remove any spaces at the start or end of the string
+
+    console.log({parsedData})
 
     typeText(messageDiv, parsedData); //start typing the response
   } else {
@@ -123,7 +125,6 @@ const handleSubmit = async (e) => {
 
     alert(err);
   }
-
 }
 
 // Call event listener
@@ -133,4 +134,4 @@ form.addEventListener('keyup', (e) => {
   if (e.keyCode === 13) {
     handleSubmit(e);
   }
-})
+});
