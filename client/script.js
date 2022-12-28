@@ -96,6 +96,34 @@ const handleSubmit = async (e) => {
 
   //start the loading dots animation
   loader(messageDiv);
+
+  //fetch the response from the server -> get bot's response
+  const response = await fetch('/api', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ 
+      prompt: data.get('prompt') //data from our text area element on the screen
+    })
+  })
+  
+  clearInterval(loadInterval); //stop the loading dots animation
+  messageDiv.innerHTML = ''; //clear the message div. We are not sure at which point in the loading dots animation the response will come back. Could be at 1 dot, 2 dots, etc.
+
+  if(response.ok) {
+    const data = await response.json(); //get the response from the BE server
+    const parsedData = data.bot.trim(); //remove any spaces at the start or end of the string
+
+    typeText(messageDiv, parsedData); //start typing the response
+  } else {
+    const err = await response.text();
+
+    messageDiv.innerHTML = "Something went wrong. Please try again."
+
+    alert(err);
+  }
+
 }
 
 // Call event listener
