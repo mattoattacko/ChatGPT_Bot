@@ -109,7 +109,7 @@ const handleSubmit = async (e) => {
   })
   
   clearInterval(loadInterval); //stop the loading dots animation
-  messageDiv.innerHTML = ""; //clear the message div. We are not sure at which point in the loading dots animation the response will come back. Could be at 1 dot, 2 dots, etc.
+  messageDiv.innerHTML = " "; //clear the message div. We are not sure at which point in the loading dots animation the response will come back. Could be at 1 dot, 2 dots, etc.
 
   if(response.ok) {
     const data = await response.json(); //get the response from the BE server
