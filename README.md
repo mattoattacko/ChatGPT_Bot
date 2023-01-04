@@ -1,4 +1,6 @@
-## Ask Me Anything 
+## Ask ChatBot Anything 
+
+<img src="chatbot.png" alt="chatbot"/>
 
 ### note: in our package json, we added a "type" equal to "module", which allows us to use the imports instead of regular require statements. 
 ### note: we removed "main": "index.js" from our package.json, because it might conflict the index.js from the server.
